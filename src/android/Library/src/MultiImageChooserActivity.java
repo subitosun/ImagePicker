@@ -566,19 +566,15 @@ public class MultiImageChooserActivity extends AppCompatActivity implements
                             }
                         }
                     }
-
+                    Map<String, String> fileMap = new HashMap<String, String>();
+                    fileMap.put("originalSrc", file.getAbsolutePath());
                     if (outputType == OutputType.FILE_URI) {
-                        Map<String, String> fileMap = new HashMap<String, String>();
-                        fileMap.put("originalSrc", file.getAbsolutePath());
                         file = storeImage(bmp, "thmb_" + file.getName());
                         fileMap.put("src", Uri.fromFile(file).toString());
                         al.add(fileMap);
-                        // file = storeImage(bmp, file.getName());
-                        // al.add(Uri.fromFile(file).toString());
+                    } else if (outputType == OutputType.BASE64_STRING) {
+                        fileMap.put("src", getBase64OfImage(bmp));
                     }
-//                    } else if (outputType == OutputType.BASE64_STRING) {
-//                        al.add(getBase64OfImage(bmp));
-//                    }
                 }
                 return al;
             } catch (IOException e) {
