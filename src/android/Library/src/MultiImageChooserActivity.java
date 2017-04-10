@@ -75,6 +75,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.TextView;
 import android.widget.ImageView;
 
 public class MultiImageChooserActivity extends AppCompatActivity implements
@@ -177,6 +178,7 @@ public class MultiImageChooserActivity extends AppCompatActivity implements
         getLoaderManager().initLoader(CURSORLOADER_REAL, null, this);
         setupHeader();
         updateAcceptButton();
+        updateCounter();
         progress = new ProgressDialog(this);
         progress.setTitle(getString(fakeR.getId("string", "multi_image_picker_processing_images_title")));
         progress.setMessage(getString(fakeR.getId("string", "multi_image_picker_processing_images_message")));
@@ -240,6 +242,7 @@ public class MultiImageChooserActivity extends AppCompatActivity implements
 
         checkStatus.put(position, isChecked);
         updateAcceptButton();
+        updateCounter();
     }
 
     @Override
@@ -331,6 +334,11 @@ public class MultiImageChooserActivity extends AppCompatActivity implements
         if (abDoneView != null) {
             abDoneView.setEnabled(fileNames.size() != 0);
         }
+    }
+
+    private void updateCounter() {
+        TextView counterView = (TextView) findViewById(fakeR.getId("id", "footer_counter_textview"));
+        counterView.setText(fileNames.size()+"/"+maxImageCount);
     }
 
     private void setupHeader() {

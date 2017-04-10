@@ -19,5 +19,5 @@
         android:scrollingCache="true"
         android:stretchMode="columnWidth"
         android:verticalSpacing="8dip" />
-
+    <include layout="@layout/footer_counter" />
 </LinearLayout>
