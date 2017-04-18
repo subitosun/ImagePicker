@@ -6,4 +6,8 @@
     <string name="requesting_thumbnails">Pobieranie miniaturek, proszę czekać</string>
     <string name="multi_image_picker_processing_images_title">Przetwarzanie zdjęć</string>
     <string name="multi_image_picker_processing_images_message">Proszę czekać</string>
+    <string name="multi_image_picker_maximum_photo_count">Maksymalna liczba zdjęć przekroczona</string>
+    <string name="multi_image_picker_photos_to_select">Liczba zdjęć, które możesz zaznaczyć: %d</string>    
+    <string name="discard">Anuluj</string>
+    <string name="done">OK</string>    
  </resources>
