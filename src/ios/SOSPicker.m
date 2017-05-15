@@ -189,22 +189,24 @@ typedef enum : NSUInteger {
                 UIImage* image = [UIImage imageNamed:item.image_fullsize];
                 [result_all addObject:[UIImageJPEGRepresentation(image, self.quality/100.0f) base64EncodedStringWithOptions:0]];
             } else {
-                if (self.quality == 100) {
-                    // no scaling, no downsampling, this is the fastest option
-                    [result_all addObject:item.image_fullsize];
-                } else {
-                    // resample first
+                NSMutableDictionary *imageData = [[NSMutableDictionary alloc] init];
+
+                    [imageData setObject:item.image_fullsize forKey:@"originalSrc"];
+
                     UIImage* image = [UIImage imageNamed:item.image_fullsize];
                     data = UIImageJPEGRepresentation(image, self.quality/100.0f);
                     if (![data writeToFile:filePath options:NSAtomicWrite error:&err]) {
                         result = [CDVPluginResult resultWithStatus:CDVCommandStatus_IO_EXCEPTION messageAsString:[err localizedDescription]];
                         break;
                     } else {
-                        [result_all addObject:[[NSURL fileURLWithPath:filePath] absoluteString]];
+                        [imageData setObject:[[NSURL fileURLWithPath:filePath] absoluteString] forKey:@"src"];
+
                     }
-                }
+                    [result_all addObject:imageData];
             }
         } else {
+            NSMutableDictionary *imageData = [[NSMutableDictionary alloc] init];
+
             // scale
             UIImage* image = [UIImage imageNamed:item.image_fullsize];
             UIImage* scaledImage = [self imageByScalingNotCroppingForSize:image toSize:targetSize];
@@ -217,7 +219,11 @@ typedef enum : NSUInteger {
                 if(self.outputType == BASE64_STRING){
                     [result_all addObject:[data base64EncodedStringWithOptions:0]];
                 } else {
-                    [result_all addObject:[[NSURL fileURLWithPath:filePath] absoluteString]];
+                    [imageData setObject:[[NSURL fileURLWithPath:item.image_fullsize] absoluteString] forKey:@"originalSrc"];
+
+                    [imageData setObject:[[NSURL fileURLWithPath:filePath] absoluteString] forKey:@"src"];
+                    [result_all addObject:imageData];
+
                 }
             }
         }
