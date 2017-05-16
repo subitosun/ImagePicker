@@ -31,3 +31,4 @@
 /* Albums */
 "picker.table.user-albums-header" = "Kolekcje";
 
+"multi_image_picker_maximum_photo_count" = "Maksymalna liczba zdjęć przekroczona"
