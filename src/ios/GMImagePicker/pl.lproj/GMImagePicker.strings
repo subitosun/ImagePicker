@@ -1,0 +1,33 @@
+/* Cancel */
+"picker.navigation.cancel-button" = "Anuluj";
+
+/* Done */
+"picker.navigation.done-button" = "Zatwierdź";
+
+/* Navigation bar default title */
+"picker.navigation.title" = "GMImagePicker";
+
+/* %@ Items Selected */
+"picker.selection.multiple-items" = "Liczba zdjęć, które możesz zaznaczyć: %@";
+
+/* %@ Photos Selected */
+"picker.selection.multiple-photos" = "Liczba zdjęć, które możesz zaznaczyć: %@";
+
+/* %@ Videos Selected */
+"picker.selection.multiple-videos" = "Liczba filmów, które możesz zaznaczyć: %@";
+
+/* 1 Photo Selected */
+"picker.selection.single-photo" = "Zaznaczono 1 zdjęcie";
+
+/* 1 Video Selected */
+"picker.selection.single-video" = "Zaznaczono 1 film";
+
+/* All photos */
+"picker.table.all-photos-label" = "Rolka aparatu";
+
+/* Smart Albums */
+"picker.table.smart-albums-header" = "Kolekcje";
+
+/* Albums */
+"picker.table.user-albums-header" = "Kolekcje";
+
