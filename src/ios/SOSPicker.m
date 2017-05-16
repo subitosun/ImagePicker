@@ -61,13 +61,13 @@ typedef enum : NSUInteger {
     NSString * title = [options objectForKey:@"title"];
     NSString * message = [options objectForKey:@"message"];
 	BOOL disable_popover = [[options objectForKey:@"disable_popover" ] boolValue];
+    NSInteger maximumImagesCount = [[options objectForKey:@"maximumImagesCount"] integerValue];
     if (message == (id)[NSNull null]) {
       message = nil;
     }
     self.width = [[options objectForKey:@"width"] integerValue];
     self.height = [[options objectForKey:@"height"] integerValue];
     self.quality = [[options objectForKey:@"quality"] integerValue];
-    self.maximumImagesCount = [[options objectForKey:@"maximumImagesCount"] integerValue];
 
     self.callbackId = command.callbackId;
     [self launchGMImagePicker:allow_video title:title message:message disable_popover:disable_popover maximumImagesCount:maximumImagesCount];
