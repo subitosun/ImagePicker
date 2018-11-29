@@ -1,10 +1,10 @@
 {
-  "version": "2.1.8",
-  "name": "cordova-plugin-burator-imagepicker",
+  "version": "2.2.2",
+  "name": "cordova-plugin-subitosun-imagepicker",
   "cordova_name": "ImagePicker",
   "description": "This plugin allows selection of multiple images from the camera roll / gallery in a phonegap app",
   "license": "MIT",
-  "repo": "https://github.com/burator/ImagePicker",
+  "repo": "https://github.com/subitosun/ImagePicker",
   "issue": "",
   "keywords": [],
   "platforms": [
