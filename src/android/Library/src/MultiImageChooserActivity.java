@@ -586,7 +586,7 @@ public class MultiImageChooserActivity extends AppCompatActivity implements
                         String exifOrientation = fileExiff.getAttribute(ExifInterface.TAG_ORIENTATION);
                         fileMap.put("exifOrientation", exifOrientation);
                     } catch (Exception ignore) {
-                        fileMap.put("exifOrientation", '');
+                        fileMap.put("exifOrientation", "");
                     }       
 
                     if (outputType == OutputType.FILE_URI) {
