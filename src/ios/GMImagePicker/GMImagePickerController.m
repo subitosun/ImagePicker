@@ -178,11 +178,11 @@
     }
     else if (nImages>1)
     {
-        return [NSString stringWithFormat:NSLocalizedStringFromTable(@"picker.selection.multiple-photos", @"GMImagePicker", @"%@ Photos Selected"), @(self.maximumImagesCount - nImages)];
+        return [NSString stringWithFormat:NSLocalizedStringFromTable(@"picker.selection.multiple-photos", @"GMImagePicker", @"%@ Photos Selected"), @(nImages)];
     }
     else if (nImages==1)
     {
-        return [NSString stringWithFormat:NSLocalizedStringFromTable(@"picker.selection.multiple-photos", @"GMImagePicker", @"%@ Photos Selected"), @(self.maximumImagesCount - nImages)];
+        return NSLocalizedStringFromTable(@"picker.selection.single-photo", @"GMImagePicker", @"1 Photo Selected" );
     }
     else if (nVideos>1)
     {
