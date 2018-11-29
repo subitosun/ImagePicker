@@ -78,6 +78,7 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.ImageView;
+import android.media.ExifInterface;
 
 public class MultiImageChooserActivity extends AppCompatActivity implements
         OnItemClickListener,
@@ -579,6 +580,15 @@ public class MultiImageChooserActivity extends AppCompatActivity implements
                     }
                     Map<String, String> fileMap = new HashMap<String, String>();
                     fileMap.put("originalSrc", file.getAbsolutePath());
+
+                    try {
+                        ExifInterface fileExiff = new ExifInterface(file.getAbsolutePath());
+                        String exifOrientation = fileExiff.getAttribute(ExifInterface.TAG_ORIENTATION);
+                        fileMap.put("exifOrientation", exifOrientation);
+                    } catch (Exception ignore) {
+                        fileMap.put("exifOrientation", '');
+                    }       
+
                     if (outputType == OutputType.FILE_URI) {
                         file = storeImage(bmp, "thmb_" + file.getName());
                         fileMap.put("src", Uri.fromFile(file).toString());
@@ -653,9 +663,9 @@ public class MultiImageChooserActivity extends AppCompatActivity implements
             }
 
             if (rotate != 0) {
-                // Matrix matrix = new Matrix();
-                // matrix.setRotate(rotate);
-                // bmp = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), matrix, true);
+                Matrix matrix = new Matrix();
+                matrix.setRotate(rotate);
+                bmp = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), matrix, true);
             }
 
             return bmp;
