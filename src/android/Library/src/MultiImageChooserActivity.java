@@ -653,9 +653,9 @@ public class MultiImageChooserActivity extends AppCompatActivity implements
             }
 
             if (rotate != 0) {
-                Matrix matrix = new Matrix();
-                matrix.setRotate(rotate);
-                bmp = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), matrix, true);
+                // Matrix matrix = new Matrix();
+                // matrix.setRotate(rotate);
+                // bmp = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), matrix, true);
             }
 
             return bmp;

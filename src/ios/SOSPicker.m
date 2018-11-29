@@ -39,28 +39,17 @@ typedef enum : NSUInteger {
     PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
     if (status == PHAuthorizationStatusAuthorized) {
         NSLog(@"Access has been granted.");
-        
-        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else if (status == PHAuthorizationStatusDenied) {
-        NSString* message = @"Access has been denied. Change your setting > this app > Photo enable";
-        NSLog(@"%@", message);
-        
-        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:message];
-        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+        NSLog(@"Access has been denied. Change your setting > this app > Photo enable");
     } else if (status == PHAuthorizationStatusNotDetermined) {
         // Access has not been determined. requestAuthorization: is available
         [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {}];
-        
-        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else if (status == PHAuthorizationStatusRestricted) {
-        NSString* message = @"Access has been restricted. Change your setting > Privacy > Photo enable";
-        NSLog(@"%@", message);
-        
-        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:message];
-        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+        NSLog(@"Access has been restricted. Change your setting > Privacy > Photo enable");
     }
+
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 - (void) getPictures:(CDVInvokedUrlCommand *)command {
@@ -69,10 +58,10 @@ typedef enum : NSUInteger {
 
     self.outputType = [[options objectForKey:@"outputType"] integerValue];
     BOOL allow_video = [[options objectForKey:@"allow_video" ] boolValue ];
-    NSInteger maximumImagesCount = [[options objectForKey:@"maximumImagesCount"] integerValue];
     NSString * title = [options objectForKey:@"title"];
     NSString * message = [options objectForKey:@"message"];
-    BOOL disable_popover = [[options objectForKey:@"disable_popover" ] boolValue];
+	BOOL disable_popover = [[options objectForKey:@"disable_popover" ] boolValue];
+    NSInteger maximumImagesCount = [[options objectForKey:@"maximumImagesCount"] integerValue];
     if (message == (id)[NSNull null]) {
       message = nil;
     }
@@ -202,22 +191,24 @@ typedef enum : NSUInteger {
                 UIImage* image = [UIImage imageNamed:item.image_fullsize];
                 [result_all addObject:[UIImageJPEGRepresentation(image, self.quality/100.0f) base64EncodedStringWithOptions:0]];
             } else {
-                if (self.quality == 100) {
-                    // no scaling, no downsampling, this is the fastest option
-                    [result_all addObject:item.image_fullsize];
-                } else {
-                    // resample first
+                NSMutableDictionary *imageData = [[NSMutableDictionary alloc] init];
+
+                    [imageData setObject:item.image_fullsize forKey:@"originalSrc"];
+
                     UIImage* image = [UIImage imageNamed:item.image_fullsize];
                     data = UIImageJPEGRepresentation(image, self.quality/100.0f);
                     if (![data writeToFile:filePath options:NSAtomicWrite error:&err]) {
                         result = [CDVPluginResult resultWithStatus:CDVCommandStatus_IO_EXCEPTION messageAsString:[err localizedDescription]];
                         break;
                     } else {
-                        [result_all addObject:[[NSURL fileURLWithPath:filePath] absoluteString]];
+                        [imageData setObject:[[NSURL fileURLWithPath:filePath] absoluteString] forKey:@"src"];
+
                     }
-                }
+                    [result_all addObject:imageData];
             }
         } else {
+            NSMutableDictionary *imageData = [[NSMutableDictionary alloc] init];
+
             // scale
             UIImage* image = [UIImage imageNamed:item.image_fullsize];
             UIImage* scaledImage = [self imageByScalingNotCroppingForSize:image toSize:targetSize];
@@ -230,7 +221,11 @@ typedef enum : NSUInteger {
                 if(self.outputType == BASE64_STRING){
                     [result_all addObject:[data base64EncodedStringWithOptions:0]];
                 } else {
-                    [result_all addObject:[[NSURL fileURLWithPath:filePath] absoluteString]];
+                    [imageData setObject:[[NSURL fileURLWithPath:item.image_fullsize] absoluteString] forKey:@"originalSrc"];
+
+                    [imageData setObject:[[NSURL fileURLWithPath:filePath] absoluteString] forKey:@"src"];
+                    [result_all addObject:imageData];
+
                 }
             }
         }
