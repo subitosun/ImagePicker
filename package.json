@@ -11,10 +11,20 @@
     "android",
     "ios"
   ],
-  "engines": [
-    {
-      "name": "cordova",
-      "version": ">=3.5.0"
-    }
-  ]
+  "cordova": {
+    "id": "cordova-plugin-subitosun-imagepicker",
+    "platforms": [
+      "ios",
+      "android",
+      "wp8"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/subitosun/ImagePicker.git"
+  },
+  "engines": {
+    "name": "cordova",
+    "version": ">=3.5.0"
+  }
 }
