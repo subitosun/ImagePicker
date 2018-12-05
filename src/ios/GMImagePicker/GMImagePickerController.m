@@ -192,7 +192,7 @@
     {
         return NSLocalizedStringFromTable(@"picker.selection.single-video", @"GMImagePicker", @"1 Video Selected");
     }
-    else if (self.maximumImagesCount == nImage) {
+    else if (self.maximumImagesCount == nImages) {
         return NSLocalizedStringFromTable(@"picker.selection.multi_image_picker_maximum_photo_count", @"GMImagePicker", @"Maximum images selected");
     }
     else
